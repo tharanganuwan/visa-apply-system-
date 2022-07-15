@@ -15,7 +15,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 12, 5, 70),
+            backgroundColor: Colors.blue,
             title: Text('News & Updates'),
             centerTitle: true,
             bottom: TabBar(tabs: [
