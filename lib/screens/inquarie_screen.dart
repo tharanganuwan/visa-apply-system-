@@ -8,11 +8,11 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 
-class ContactScreen extends StatefulWidget {
-  const ContactScreen({Key? key}) : super(key: key);
+class InqureScreen extends StatefulWidget {
+  const InqureScreen({Key? key}) : super(key: key);
 
   @override
-  State<ContactScreen> createState() => _ContactScreenState();
+  State<InqureScreen> createState() => _InqureScreenState();
 }
 
 final nameController = TextEditingController();
@@ -45,12 +45,12 @@ Future sendEmail() async {
   return response.statusCode;
 }
 
-class _ContactScreenState extends State<ContactScreen> {
+class _InqureScreenState extends State<InqureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
+        title: Text('Visa Inquire Form'),
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
@@ -124,7 +124,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   onTap: () {
                     sendEmail();
                   },
-                  text: 'Contact Now')
+                  text: 'Inquire Now')
             ],
           ),
         ),
