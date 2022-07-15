@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:alwaysvisa/components/custom_button.dart';
 import 'package:alwaysvisa/components/custom_text.dart';
 import 'package:alwaysvisa/components/custome_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:http/http.dart' as http;
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -12,13 +15,43 @@ class ContactScreen extends StatefulWidget {
   State<ContactScreen> createState() => _ContactScreenState();
 }
 
+final nameController = TextEditingController();
+final mobileController = TextEditingController();
+final emailController = TextEditingController();
+final subjectControler = TextEditingController();
+final descriptionController = TextEditingController();
+Future sendEmail() async {
+  final serviceId = 'service_rp38611';
+  final templateId = 'template_u7le958';
+  final userId = '8Oq0drGqIM-XZduJK';
+
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  final response = await http.post(url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'service_id': serviceId,
+        'template_id': templateId,
+        'user_id': userId,
+        'template_params': {
+          "name": nameController.text,
+          "subject": subjectControler.text,
+          "mobile": mobileController,
+          "email": emailController,
+          "description": descriptionController,
+        }
+      }));
+  return response.statusCode;
+}
+
 class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contact Us'),
-        backgroundColor: Color.fromARGB(255, 12, 5, 70),
+        backgroundColor: Colors.blue,
         centerTitle: true,
       ),
       body: Padding(
@@ -33,6 +66,7 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             CustomTextField(
               hintText: 'Enter Full Name',
+              controller: nameController,
             ),
             SizedBox(
               height: 10,
@@ -44,6 +78,7 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             CustomTextField(
               hintText: 'Enter Mobile Number',
+              controller: mobileController,
             ),
             SizedBox(
               height: 10,
@@ -55,6 +90,7 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             CustomTextField(
               hintText: 'Enter Email Address',
+              controller: emailController,
             ),
             SizedBox(
               height: 10,
@@ -66,6 +102,7 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             CustomTextField(
               hintText: 'Enter Subject or Reason for contacting',
+              controller: subjectControler,
             ),
             SizedBox(
               height: 10,
@@ -77,11 +114,16 @@ class _ContactScreenState extends State<ContactScreen> {
             ),
             CustomTextField(
               hintText: 'Enter Description',
+              controller: descriptionController,
             ),
             SizedBox(
               height: 30,
             ),
-            CustomButton(onTap: () {}, text: 'Contact Now')
+            CustomButton(
+                onTap: () {
+                  sendEmail();
+                },
+                text: 'Contact Now')
           ],
         ),
       ),
