@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640003067772",
+    "project_id": "visa-apply-system",
+    "storage_bucket": "visa-apply-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640003067772:android:e07a004afa19c6b8c01ef9",
+        "android_client_info": {
+          "package_name": "com.visaapplysystem.alwaysvisa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640003067772-a6l967m7qtm4ck0t6nle4k94jfdtk7al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzJkJb-Agd9TXjsa691OiRtmNB_FMDUw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640003067772-a6l967m7qtm4ck0t6nle4k94jfdtk7al.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

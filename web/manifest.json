@@ -1,6 +1,6 @@
 {
-    "name": "visa_apply_system",
-    "short_name": "visa_apply_system",
+    "name": "alwaysvisa",
+    "short_name": "alwaysvisa",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

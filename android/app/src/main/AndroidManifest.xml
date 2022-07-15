@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.visa_apply_system">
+    package="com.example.alwaysvisa">
    <application
-        android:label="visa_apply_system"
+        android:label="alwaysvisa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
