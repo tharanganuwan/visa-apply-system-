@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: initBackButton,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 12, 5, 70),
+          backgroundColor: kwhite,
           centerTitle: true,
           elevation: 4,
           leading: Builder(builder: (BuildContext context) {

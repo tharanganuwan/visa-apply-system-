@@ -9,7 +9,7 @@ class Custom_loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpinKitDoubleBounce(
-      color: Colors.amber,
+      color: Colors.blueAccent,
       size: 40,
     );
   }

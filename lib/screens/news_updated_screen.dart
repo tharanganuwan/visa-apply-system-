@@ -16,7 +16,7 @@ class _NewsUpdatesScreenState extends State<NewsUpdatesScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: Text('News & Updates'),
-            backgroundColor: Color.fromARGB(255, 12, 5, 70),
+            backgroundColor: Colors.blue,
             centerTitle: true,
             bottom: TabBar(tabs: [
               Tab(

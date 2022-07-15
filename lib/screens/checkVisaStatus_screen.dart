@@ -18,7 +18,7 @@ class _CheckVisaStatusState extends State<CheckVisaStatus> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 12, 5, 70),
+        backgroundColor: Colors.blue,
         title: Text('Check Visa Status'),
       ),
       body: Padding(
