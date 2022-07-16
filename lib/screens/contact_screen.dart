@@ -22,12 +22,13 @@ final subjectControler = TextEditingController();
 final descriptionController = TextEditingController();
 Future sendEmail() async {
   final serviceId = 'service_rp38611';
-  final templateId = 'template_u7le958';
+  final templateId = 'template_j3hpazi';
   final userId = '8Oq0drGqIM-XZduJK';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
   final response = await http.post(url,
       headers: {
+        'origin': 'http://localhost',
         'Content-Type': 'application/json',
       },
       body: json.encode({
@@ -37,9 +38,9 @@ Future sendEmail() async {
         'template_params': {
           "name": nameController.text,
           "subject": subjectControler.text,
-          "mobile": mobileController,
-          "email": emailController,
-          "description": descriptionController,
+          "mobile": mobileController.text,
+          "email": emailController.text,
+          "description": descriptionController.text,
         }
       }));
   return response.statusCode;
@@ -123,6 +124,7 @@ class _ContactScreenState extends State<ContactScreen> {
               CustomButton(
                   onTap: () {
                     sendEmail();
+                    print("sent");
                   },
                   text: 'Contact Now')
             ],
