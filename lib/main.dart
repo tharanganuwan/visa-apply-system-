@@ -1,3 +1,4 @@
+import 'package:alwaysvisa/providers/appication_provider.dart';
 import 'package:alwaysvisa/providers/auth/login_provider.dart';
 import 'package:alwaysvisa/providers/auth/registration_provider.dart';
 import 'package:alwaysvisa/providers/auth/user_provider.dart';
@@ -23,6 +24,9 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ApplicationPrivider(),
     )
   ], child: const MyApp()));
 }

@@ -1,4 +1,5 @@
 import 'package:alwaysvisa/components/custom_loader.dart';
+import 'package:alwaysvisa/screens/apply_now.dart';
 import 'package:alwaysvisa/screens/inquarie_screen.dart';
 import 'package:alwaysvisa/utils/constant.dart';
 import 'package:alwaysvisa/utils/util_function.dart';
@@ -52,7 +53,9 @@ class _TearmsAndConditionState extends State<TearmsAndCondition> {
                     child: isLoading
                         ? Custom_loader()
                         : ElevatedButton(
-                            onPressed: () async {},
+                            onPressed: () async {
+                              UtilFunction.navigateTo(context, ApplyNow());
+                            },
                             child: Text(
                               'Apply Now',
                               style: TextStyle(fontSize: 20),
