@@ -54,7 +54,11 @@ class _TearmsAndConditionState extends State<TearmsAndCondition> {
                         ? Custom_loader()
                         : ElevatedButton(
                             onPressed: () async {
-                              UtilFunction.navigateTo(context, ApplyNow());
+                              UtilFunction.navigateTo(
+                                  context,
+                                  ApplyNow(
+                                    gModel: null,
+                                  ));
                             },
                             child: Text(
                               'Apply Now',

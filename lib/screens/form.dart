@@ -12,6 +12,9 @@ class AForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isgenarator = (Provider.of<ApplicationPrivider>(context, listen: false)
+            .applicanttype !=
+        "Guarantor Details");
     return Consumer<ApplicationPrivider>(
       builder: (context, value, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +80,22 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
+          (isgenarator)
+              ? CustomText(
+                  text: 'Age',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                )
+              : SizedBox(),
+          (isgenarator)
+              ? CustomTextField(
+                  hintText: 'Enter Your age',
+                  controller: value.ageController,
+                )
+              : SizedBox(),
+          SizedBox(
+            height: 10,
+          ),
           CustomText(
             text: 'Nationality',
             fontSize: 16,
@@ -90,17 +109,14 @@ class AForm extends StatelessWidget {
               value.setNationality(x.name.toString());
             },
           ),
-          SizedBox(
-            height: 10,
-          ),
-          (value.appicationform)
+          (isgenarator)
               ? CustomText(
                   text: 'Passport Number',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (value.appicationform)
+          (isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Passport Number ',
                   controller: value.passportController,
@@ -109,14 +125,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (value.appicationform)
+          (isgenarator)
               ? CustomText(
                   text: 'Essue Date',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (value.appicationform)
+          (isgenarator)
               ? GestureDetector(
                   onTap: () async {
                     DateTime date = DateTime(2022, 12, 04);
@@ -143,7 +159,9 @@ class AForm extends StatelessWidget {
                     ),
                     child: Center(
                       child: CustomText(
-                        text: (value.checkEssureDate)
+                        text: (value.essuredate == "null" ||
+                                value.essuredate == "2022/12/4" ||
+                                value.essuredate == null)
                             ? value.essuredate.toString()
                             : "Select Date",
                       ),
@@ -154,14 +172,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (value.appicationform)
+          (isgenarator)
               ? CustomText(
                   text: 'Expiry Date',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (value.appicationform)
+          (isgenarator)
               ? GestureDetector(
                   onTap: () {
                     Future<DateTime?> newDate = showDatePicker(
@@ -188,7 +206,8 @@ class AForm extends StatelessWidget {
                     ),
                     child: Center(
                       child: CustomText(
-                        text: (value.essuredate == null)
+                        text: (value.essuredate == null ||
+                                value.essuredate == "2022/12/4")
                             ? "Select Date"
                             : value.essuredate.toString(),
                       ),
@@ -199,14 +218,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (value.appicationform)
+          (isgenarator)
               ? CustomText(
                   text: 'Issue Place',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (value.appicationform)
+          (isgenarator)
               ? CountryCodePicker(
                   showCountryOnly: true,
                   showOnlyCountryWhenClosed: true,
@@ -214,17 +233,14 @@ class AForm extends StatelessWidget {
                   onChanged: (x) {},
                 )
               : SizedBox(),
-          SizedBox(
-            height: 10,
-          ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Company Name',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Company Name',
                   controller: value.companynameController,
@@ -233,14 +249,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Relationship with Passenger',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Relationship with Passenger Name',
                   controller: value.relationwithpController,
@@ -249,14 +265,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Contact number 1',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Contact number Name',
                   controller: value.contactNumberController1,
@@ -265,14 +281,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Contact number 2',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Contact number Name',
                   controller: value.contactNumberController2,
@@ -281,14 +297,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Email',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomTextField(
                   hintText: 'Enter Email Name',
                   controller: value.emailController,
@@ -297,14 +313,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Select Applicants Adults',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? DropdownButtonFormField(
                   value: 1,
                   hint: Text("   select"),
@@ -326,14 +342,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Select Applicants Children',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? DropdownButtonFormField(
                   value: 0,
                   hint: Text("   select"),
@@ -355,14 +371,14 @@ class AForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          (!value.appicationform)
+          (!isgenarator)
               ? CustomText(
                   text: 'Select Applicants Infants',
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 )
               : SizedBox(),
-          (!value.appicationform)
+          (!isgenarator)
               ? DropdownButtonFormField(
                   value: 0,
                   hint: Text("   select"),
@@ -381,9 +397,6 @@ class AForm extends StatelessWidget {
                   },
                 )
               : SizedBox(),
-          SizedBox(
-            height: 30,
-          ),
         ],
       ),
     );
