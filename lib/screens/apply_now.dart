@@ -7,9 +7,11 @@ import 'package:alwaysvisa/models/genarator_model.dart';
 import 'package:alwaysvisa/providers/appication_provider.dart';
 import 'package:alwaysvisa/providers/auth/user_provider.dart';
 import 'package:alwaysvisa/screens/form.dart';
+import 'package:alwaysvisa/screens/home_screen.dart';
 import 'package:alwaysvisa/utils/pdf_api.dart';
 import 'package:alwaysvisa/utils/util_function.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -207,11 +209,24 @@ class _ApplyNowState extends State<ApplyNow> {
                               final ref =
                                   FirebaseStorage.instance.ref(destination);
                               UploadTask uploadTask = ref.putFile(pdfFile);
-
-                              final spapshot =
-                                  await uploadTask.whenComplete(() {});
-                              linkEmail = await spapshot.ref.getDownloadURL();                             
-                              await sendEmail();  
+                              {
+                                final spapshot =
+                                    await uploadTask.whenComplete(() {});
+                                linkEmail = await spapshot.ref.getDownloadURL();
+                                await sendEmail();
+                              }
+                              value.clearDate();
+                              await AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.SUCCES,
+                                animType: AnimType.BOTTOMSLIDE,
+                                title: 'Submitted.',
+                                desc: 'Hava A Nice Day.............',
+                                btnOkOnPress: () {
+                                  UtilFunction.navigateTo(
+                                      context, HomeScreen());
+                                },
+                              ).show();
                             }
                           }
                           value.setAppicationCount();
