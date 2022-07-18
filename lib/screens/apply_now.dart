@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:alwaysvisa/components/custom_button.dart';
 import 'package:alwaysvisa/components/custom_text.dart';
 import 'package:alwaysvisa/components/custome_textfield.dart';
-import 'package:alwaysvisa/models/applicant_model.dart';
 import 'package:alwaysvisa/models/genarator_model.dart';
 import 'package:alwaysvisa/providers/appication_provider.dart';
+import 'package:alwaysvisa/providers/auth/user_provider.dart';
 import 'package:alwaysvisa/screens/form.dart';
+import 'package:alwaysvisa/utils/pdf_api.dart';
 import 'package:alwaysvisa/utils/util_function.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class ApplyNow extends StatefulWidget {
   ApplyNow({
@@ -18,35 +23,34 @@ class ApplyNow extends StatefulWidget {
   }) : super(key: key);
   int count;
   GenatorModel? gModel;
+
   @override
   State<ApplyNow> createState() => _ApplyNowState();
 }
 
-// Future sendEmail() async {
-//   final serviceId = 'service_rp38611';
-//   final templateId = 'template_j3hpazi';
-//   final userId = '8Oq0drGqIM-XZduJK';
+var linkEmail = null;
 
-//   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-//   final response = await http.post(url,
-//       headers: {
-//         'origin': 'http://localhost',
-//         'Content-Type': 'application/json',
-//       },
-//       body: json.encode({
-//         'service_id': serviceId,
-//         'template_id': templateId,
-//         'user_id': userId,
-//         'template_params': {
-//           "name": nameController.text,
-//           "subject": subjectControler.text,
-//           "mobile": mobileController.text,
-//           "email": emailController.text,
-//           "description": descriptionController.text,
-//         }
-//       }));
-//   return response.statusCode;
-// }
+Future sendEmail() async {
+  final serviceId = 'service_rp38611';
+  final templateId = 'template_j3hpazi';
+  final userId = '8Oq0drGqIM-XZduJK';
+
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  final response = await http.post(url,
+      headers: {
+        'origin': 'http://localhost',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'service_id': serviceId,
+        'template_id': templateId,
+        'user_id': userId,
+        'template_params': {
+          "details": linkEmail,
+        }
+      }));
+  return response.statusCode;
+}
 
 class _ApplyNowState extends State<ApplyNow> {
   @override
@@ -165,10 +169,15 @@ class _ApplyNowState extends State<ApplyNow> {
                         ),
                       ),
                       CustomButton(
-                        onTap: () {
+                        onTap: () async {
+                          String userId =
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .userModel
+                                  .uid;
+
                           if (widget.count == 100) {
                             GenatorModel model =
-                                value.setGenratorDetailsModel();
+                                value.setGenratorDetailsModel(userId);
                             value.setAppicationType();
                             UtilFunction.navigateTo(
                                 context,
@@ -177,10 +186,9 @@ class _ApplyNowState extends State<ApplyNow> {
                                   gModel: model,
                                 ));
                           } else if (value.appicationCount > 0) {
-                            value.setAppicationType();
                             GenatorModel model =
                                 value.setApplicantDetailsModel(widget.gModel);
-
+                            value.setAppicationType();
                             UtilFunction.navigateTo(
                                 context,
                                 ApplyNow(
@@ -191,24 +199,20 @@ class _ApplyNowState extends State<ApplyNow> {
                             GenatorModel finalGmodel =
                                 value.setApplicantDetailsModel(widget.gModel);
 
-                            ///////////////////////////////////////
-                            //////////////////////////////////
+                            final pdfFile =
+                                await PdfApi.genaratePDF(finalGmodel);
+                            if (pdfFile != null) {
+                              final destination = "Files/${finalGmodel.id}.pdf";
 
-                            print(finalGmodel.firstname);
-                            for (int i = 0;
-                                i < finalGmodel.appcationmodellist!.length;
-                                i++) {
-                              print(
-                                  finalGmodel.appcationmodellist![i].firstname);
-                              print(finalGmodel
-                                  .appcationmodellist![i].nationality);
+                              final ref =
+                                  FirebaseStorage.instance.ref(destination);
+                              UploadTask uploadTask = ref.putFile(pdfFile);
+
+                              final spapshot =
+                                  await uploadTask.whenComplete(() {});
+                              linkEmail = await spapshot.ref.getDownloadURL();                             
+                              await sendEmail();  
                             }
-                            /////////////////////////////////////////
-                            ///////////////////////////////
-                            ///
-                            ///
-                            ///
-
                           }
                           value.setAppicationCount();
                         },

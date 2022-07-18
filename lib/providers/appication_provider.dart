@@ -1,6 +1,8 @@
 import 'package:alwaysvisa/models/applicant_model.dart';
 import 'package:alwaysvisa/models/genarator_model.dart';
+import 'package:alwaysvisa/providers/auth/user_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class ApplicationPrivider extends ChangeNotifier {
   final _fnameController = TextEditingController();
@@ -59,9 +61,13 @@ class ApplicationPrivider extends ChangeNotifier {
   List get numberlist1 => _numberlist1;
   List get numberlist2 => _numberlist2;
 
+  Future<void> addAdditionalDetails(GenatorModel m) async {
+    m.mobileNumber = _mobileNumberController.text;
+    m.contactEmail = _contactEmailController.text;
+    m.arrivalDate = _arriveDate;
+  }
+
   Future<void> setAppicationType() async {
-    print(_appicationCount);
-    print(_children + _infants);
     if (_appicationCount > _children + _infants) {
       _applicanttype = "Audlts Details";
     } else {
@@ -81,10 +87,10 @@ class ApplicationPrivider extends ChangeNotifier {
     _appicationCount = _adults + _children + _infants;
   }
 
-  GenatorModel setGenratorDetailsModel() {
+  GenatorModel setGenratorDetailsModel(String uid) {
     setGenaraterAppicationCount();
     GenatorModel genratorModel = GenatorModel(
-      id: "a",
+      id: uid,
       firstname: _fnameController.text,
       middlename: _mnameController.text,
       lastname: _lnameController.text,
@@ -134,6 +140,8 @@ class ApplicationPrivider extends ChangeNotifier {
   }
 
   GenatorModel setApplicantDetailsModel(GenatorModel? model) {
+    addAdditionalDetails(model!);
+
     ApplicantModel applicantModel = ApplicantModel(
       id: "b",
       firstname: _fnameController.text,
@@ -149,7 +157,7 @@ class ApplicationPrivider extends ChangeNotifier {
       document: null,
       applicanttype: _applicanttype.toString(),
     );
-    model!.appcationmodellist!.add(applicantModel);
+    model.appcationmodellist!.add(applicantModel);
     clearDate();
     return model;
   }
